@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>강의 기획안</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/common.css" />
+
+    <style>
+      body {
+        font-size: var(--vscode-markdown-font-size, 14px);
+        padding: 0 26px;
+        line-height: var(--vscode-markdown-line-height, 22px);
+        word-wrap: break-word;
+      }
+
+      .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 0 16px;
+        }
+
+        .container {
+          padding: 0 10px;
+        }
+
+        table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-weight: bold !important;
+      }
+
+      #code-csp-warning {
+        position: fixed;
+        top: 0;
+        right: 0;
+        color: white;
+        margin: 16px;
+        text-align: center;
+        font-size: 12px;
+        font-family: sans-serif;
+        background-color: #444444;
+        cursor: pointer;
+        padding: 6px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+      }
+
+      #code-csp-warning:hover {
+        text-decoration: none;
+        background-color: #007acc;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      }
+
+      body.scrollBeyondLastLine {
+        margin-bottom: calc(100vh - 22px);
+      }
+
+      body.showEditorSelection .code-line {
+        position: relative;
+      }
+
+      body.showEditorSelection .code-active-line:before,
+      body.showEditorSelection .code-line:hover:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -12px;
+        height: 100%;
+      }
+
+      body.showEditorSelection li.code-active-line:before,
+      body.showEditorSelection li.code-line:hover:before {
+        left: -30px;
+      }
+
+      .vscode-light.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.15);
+      }
+
+      .vscode-light.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.4);
+      }
+
+      .vscode-light.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-dark.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .vscode-dark.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.6);
+      }
+
+      .vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 160, 0, 0.7);
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 160, 0, 1);
+      }
+
+      .vscode-high-contrast.showEditorSelection
+        .code-line
+        .code-line:hover:before {
+        border-left: none;
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      a:focus,
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 1px solid -webkit-focus-ring-color;
+        outline-offset: -1px;
+      }
+
+      hr {
+        border: 0;
+        height: 2px;
+        border-bottom: 2px solid;
+      }
+
+      h1 {
+        padding-bottom: 0.3em;
+        line-height: 1.2;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      table > thead > tr > th {
+        text-align: left;
+        border-bottom: 1px solid;
+      }
+
+      table > thead > tr > th,
+      table > thead > tr > td,
+      table > tbody > tr > th,
+      table > tbody > tr > td {
+        padding: 5px 10px;
+      }
+
+      table > tbody > tr + tr > td {
+        border-top: 1px solid;
+      }
+
+      blockquote {
+        margin: 0 7px 0 5px;
+        padding: 0 16px 0 10px;
+        border-left-width: 5px;
+        border-left-style: solid;
+      }
+
+      code {
+        font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New",
+          monospace, "Droid Sans Fallback";
+        font-size: 1em;
+        line-height: 1.357em;
+      }
+
+      body.wordWrap pre {
+        white-space: pre-wrap;
+      }
+
+      pre:not(.hljs),
+      pre.hljs code > div {
+        padding: 16px;
+        border-radius: 3px;
+        overflow: auto;
+      }
+
+      pre code {
+        color: var(--vscode-editor-foreground);
+        tab-size: 4;
+      }
+
+      /** Theming */
+
+      .vscode-light pre {
+        background-color: rgba(220, 220, 220, 0.4);
+      }
+
+      .vscode-dark pre {
+        background-color: rgba(10, 10, 10, 0.4);
+      }
+
+      .vscode-high-contrast pre {
+        background-color: rgb(0, 0, 0);
+      }
+
+      .vscode-high-contrast h1 {
+        border-color: rgb(0, 0, 0);
+      }
+
+      .vscode-light table > thead > tr > th {
+        border-color: rgba(0, 0, 0, 0.69);
+      }
+
+      .vscode-dark table > thead > tr > th {
+        border-color: rgba(255, 255, 255, 0.69);
+      }
+
+      .vscode-light h1,
+      .vscode-light hr,
+      .vscode-light table > tbody > tr + tr > td {
+        border-color: rgba(0, 0, 0, 0.18);
+      }
+
+      .vscode-dark h1,
+      .vscode-dark hr,
+      .vscode-dark table > tbody > tr + tr > td {
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+    </style>
+
+    <style>
+      /* Tomorrow Theme */
+      /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+      /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+      /* Tomorrow Comment */
+      .hljs-comment,
+      .hljs-quote {
+        color: #8e908c;
+      }
+
+      /* Tomorrow Red */
+      .hljs-variable,
+      .hljs-template-variable,
+      .hljs-tag,
+      .hljs-name,
+      .hljs-selector-id,
+      .hljs-selector-class,
+      .hljs-regexp,
+      .hljs-deletion {
+        color: #c82829;
+      }
+
+      /* Tomorrow Orange */
+      .hljs-number,
+      .hljs-built_in,
+      .hljs-builtin-name,
+      .hljs-literal,
+      .hljs-type,
+      .hljs-params,
+      .hljs-meta,
+      .hljs-link {
+        color: #f5871f;
+      }
+
+      /* Tomorrow Yellow */
+      .hljs-attribute {
+        color: #eab700;
+      }
+
+      /* Tomorrow Green */
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-bullet,
+      .hljs-addition {
+        color: #718c00;
+      }
+
+      /* Tomorrow Blue */
+      .hljs-title,
+      .hljs-section {
+        color: #4271ae;
+      }
+
+      /* Tomorrow Purple */
+      .hljs-keyword,
+      .hljs-selector-tag {
+        color: #8959a8;
+      }
+
+      .hljs {
+        display: block;
+        overflow-x: auto;
+        color: #4d4d4c;
+        padding: 0.5em;
+      }
+
+      .hljs-emphasis {
+        font-style: italic;
+      }
+
+      .hljs-strong {
+        font-weight: bold;
+      }
+    </style>
+
+    <style>
+      /*
+ * Markdown PDF CSS
+ */
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI",
+          "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+        padding: 0 12px;
+      }
+
+      pre {
+        background-color: #f8f8f8;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+      }
+
+      pre:not(.hljs) {
+        padding: 23px;
+        line-height: 19px;
+      }
+
+      blockquote {
+        background: rgba(127, 127, 127, 0.1);
+        border-color: rgba(0, 122, 204, 0.5);
+      }
+
+      .emoji {
+        height: 1.4em;
+      }
+
+      code {
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      /* for inline code */
+      :not(pre):not(.hljs) > code {
+        color: #c9ae75; /* Change the old color so it seems less like an error */
+        font-size: inherit;
+      }
+
+      .page {
+        page-break-after: always;
+      }
+    </style>
+
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <script>
+        mermaid.initialize({
+          startOnLoad: true,
+          theme:
+            document.body.classList.contains("vscode-dark") ||
+            document.body.classList.contains("vscode-high-contrast")
+              ? "dark"
+              : "default",
+        });
+      </script>
+      <h1
+        id="2025-nextjs--typescript-%EA%B0%95%EC%9D%98-%EA%B8%B0%ED%9A%8D%EC%95%88"
+      >
+        2025 Next.js &amp; TypeScript 강의 기획안
+      </h1>
+      <h2
+        id="%22%ED%98%84%EB%8C%80-%EC%9B%B9-%EA%B0%9C%EB%B0%9C%EC%9D%98-%ED%95%84%EC%88%98-%EC%8A%A4%ED%83%9D-nextjs--typescript%22"
+      >
+        &quot;현대 웹 개발의 필수 스택: Next.js + TypeScript&quot;
+      </h2>
+      <h3 id="%F0%9F%92%A1-%EC%99%9C-nextjs%EC%9D%B8%EA%B0%80">
+        💡 왜 Next.js인가?
+      </h3>
+      <ol>
+        <li><strong>현대 웹 개발의 표준</strong></li>
+      </ol>
+      <ul>
+        <li>2025년 현재 React 기반 프로젝트의 65% 이상이 Next.js 채택</li>
+        <li>
+          Meta(구 Facebook)와 Vercel의 공식 협력으로 React 생태계의 사실상 표준
+          프레임워크로 자리매김
+        </li>
+      </ul>
+      <ol start="2">
+        <li><strong>성능과 SEO의 완벽한 조화</strong></li>
+      </ol>
+      <ul>
+        <li>App Router와 Server Components로 최적화된 성능</li>
+        <li>검색엔진 최적화(SEO)를 위한 SSR/SSG 기본 지원</li>
+        <li>Edge Runtime을 통한 글로벌 즉시 배포</li>
+      </ul>
+      <ol start="3">
+        <li>
+          <strong>개발 생산성 극대화</strong>
+          <table>
+            <thead>
+              <tr>
+                <th>기능</th>
+                <th>이점</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>자동 코드 분할</td>
+                <td>페이지별 최적화된 로딩</td>
+              </tr>
+              <tr>
+                <td>이미지/폰트 최적화</td>
+                <td>자동 성능 최적화</td>
+              </tr>
+              <tr>
+                <td>API 라우트</td>
+                <td>BE/FE 통합 개발 환경</td>
+              </tr>
+              <tr>
+                <td>파일 기반 라우팅</td>
+                <td>직관적인 라우팅 구조</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ol>
+      <h3 id="%F0%9F%8E%AF-%EC%99%9C-typescript%EC%9D%B8%EA%B0%80">
+        🎯 왜 TypeScript인가?
+      </h3>
+      <ol>
+        <li><strong>버그 사전 예방</strong></li>
+      </ol>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// JavaScript</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUser</span>(<span class="hljs-params">user</span>) </span>{
+  <span class="hljs-comment">// user 객체의 구조를 알 수 없음</span>
+  <span class="hljs-keyword">return</span> api.post(<span class="hljs-string">"/users"</span>, user);
+}
+
+<span class="hljs-comment">// TypeScript</span>
+<span class="hljs-keyword">interface</span> User {
+  name: <span class="hljs-built_in">string</span>;
+  email: <span class="hljs-built_in">string</span>;
+  age: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addUser</span>(<span class="hljs-params">user: User</span>) </span>{
+  <span class="hljs-comment">// 컴파일 단계에서 타입 검증</span>
+  <span class="hljs-keyword">return</span> api.post(<span class="hljs-string">"/users"</span>, user);
+}
+</div></code></pre>
+      <ol start="2">
+        <li><strong>개발 생산성 향상</strong></li>
+      </ol>
+      <ul>
+        <li>자동 완성과 타입 추론으로 개발 속도 50% 향상</li>
+        <li>리팩토링 시 안정성 보장</li>
+        <li>팀 협업 시 코드 품질 유지</li>
+      </ul>
+      <ol start="3">
+        <li>
+          <strong>산업 표준으로서의 위치</strong>
+          <table>
+            <thead>
+              <tr>
+                <th>연도</th>
+                <th>TypeScript 사용률</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2023</td>
+                <td>55%</td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>71%</td>
+              </tr>
+              <tr>
+                <td>2025</td>
+                <td>85% (예상)</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ol>
+      <h3
+        id="%F0%9F%9A%80-nextjs--typescript%EC%9D%98-%EC%8B%9C%EB%84%88%EC%A7%80"
+      >
+        🚀 Next.js + TypeScript의 시너지
+      </h3>
+      <ol>
+        <li><strong>안전한 풀스택 개발</strong></li>
+      </ol>
+      <ul>
+        <li>API 응답 타입 자동 생성</li>
+        <li>클라이언트-서버 간 타입 일관성</li>
+        <li>전체 애플리케이션의 타입 안정성 보장</li>
+      </ul>
+      <ol start="2">
+        <li><strong>엔터프라이즈급 확장성</strong></li>
+      </ol>
+      <ul>
+        <li>대규모 팀 협업에 최적화</li>
+        <li>마이크로프론트엔드 아키텍처 지원</li>
+        <li>확장 가능한 코드베이스 유지보수</li>
+      </ul>
+      <ol start="3">
+        <li><strong>미래 지향적 기술스택</strong></li>
+      </ol>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// Next.js 14+ Server Component with TypeScript</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ProductList</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> products: Product[] = <span class="hljs-keyword">await</span> fetchProducts();
+
+  <span class="hljs-keyword">return</span> (
+    &lt;ul&gt;
+      {products.map(<span class="hljs-function">(<span class="hljs-params">product</span>) =&gt;</span> (
+        &lt;li key={product.id}&gt;
+          &lt;ProductCard product={product} /&gt;
+        &lt;<span class="hljs-regexp">/li&gt;
+      ))}
+    &lt;/u</span>l&gt;
+  );
+}
+</div></code></pre>
+      <h3 id="%F0%9F%93%8A-%EC%8B%9C%EC%9E%A5-%ED%98%84%ED%99%A9-2025">
+        📊 시장 현황 (2025)
+      </h3>
+      <table>
+        <thead>
+          <tr>
+            <th>기술 스택</th>
+            <th>채용 공고 비중</th>
+            <th>평균 연봉 상승률</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Next.js + TS</td>
+            <td>45%</td>
+            <td>+15%</td>
+          </tr>
+          <tr>
+            <td>React + TS</td>
+            <td>35%</td>
+            <td>+10%</td>
+          </tr>
+          <tr>
+            <td>Vue.js</td>
+            <td>12%</td>
+            <td>+5%</td>
+          </tr>
+          <tr>
+            <td>기타</td>
+            <td>8%</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3
+        id="%F0%9F%8E%93-%EA%B5%90%EC%9C%A1%EC%9D%98-%ED%95%84%EC%9A%94%EC%84%B1"
+      >
+        🎓 교육의 필요성
+      </h3>
+      <ol>
+        <li><strong>산업 수요 대응</strong></li>
+      </ol>
+      <ul>
+        <li>기업의 87%가 TypeScript 숙련자 선호</li>
+        <li>Next.js 전문가 수요 지속 증가</li>
+      </ul>
+      <ol start="2">
+        <li><strong>경쟁력 강화</strong></li>
+      </ol>
+      <ul>
+        <li>주니어 개발자 차별화 요소</li>
+        <li>시니어 개발자 필수 역량</li>
+      </ul>
+      <ol start="3">
+        <li><strong>실무 중심 교육</strong></li>
+      </ol>
+      <ul>
+        <li>실제 프로젝트 경험</li>
+        <li>현업 적용 사례 학습</li>
+        <li>최신 개발 트렌드 반영</li>
+      </ul>
+      <h3 id="%F0%9F%92%AA-%EA%B8%B0%EB%8C%80-%ED%9A%A8%EA%B3%BC">
+        💪 기대 효과
+      </h3>
+      <ul>
+        <li>실무 프로젝트 즉시 투입 가능</li>
+        <li>코드 품질 향상</li>
+        <li>개발 생산성 증대</li>
+        <li>취업 경쟁력 강화</li>
+      </ul>
+    </div>
+  </body>
+</html>

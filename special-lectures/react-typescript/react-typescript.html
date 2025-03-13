@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>타입스크립트&리액트 특강 커리큘럼</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/common.css" />
+
+    <style>
+      body {
+        font-size: var(--vscode-markdown-font-size, 14px);
+        padding: 0 26px;
+        line-height: var(--vscode-markdown-line-height, 22px);
+        word-wrap: break-word;
+      }
+
+      .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 0 16px;
+          font-size: 13px;
+          line-height: 1.4;
+        }
+
+        .container {
+          padding: 0 10px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        h2 {
+          font-size: 20px;
+        }
+
+        h3 {
+          font-size: 18px;
+        }
+
+        h4 {
+          font-size: 16px;
+        }
+
+        table {
+          display: block;
+          overflow-x: auto;
+          white-space: nowrap;
+        }
+
+        pre {
+          font-size: 12px;
+        }
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: bold !important;
+      }
+
+      #code-csp-warning {
+        position: fixed;
+        top: 0;
+        right: 0;
+        color: white;
+        margin: 16px;
+        text-align: center;
+        font-size: 12px;
+        font-family: sans-serif;
+        background-color: #444444;
+        cursor: pointer;
+        padding: 6px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+      }
+
+      #code-csp-warning:hover {
+        text-decoration: none;
+        background-color: #007acc;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      }
+
+      body.scrollBeyondLastLine {
+        margin-bottom: calc(100vh - 22px);
+      }
+
+      body.showEditorSelection .code-line {
+        position: relative;
+      }
+
+      body.showEditorSelection .code-active-line:before,
+      body.showEditorSelection .code-line:hover:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -12px;
+        height: 100%;
+      }
+
+      body.showEditorSelection li.code-active-line:before,
+      body.showEditorSelection li.code-line:hover:before {
+        left: -30px;
+      }
+
+      .vscode-light.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.15);
+      }
+
+      .vscode-light.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(0, 0, 0, 0.4);
+      }
+
+      .vscode-light.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-dark.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.4);
+      }
+
+      .vscode-dark.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 255, 255, 0.6);
+      }
+
+      .vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+        border-left: none;
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-active-line:before {
+        border-left: 3px solid rgba(255, 160, 0, 0.7);
+      }
+
+      .vscode-high-contrast.showEditorSelection .code-line:hover:before {
+        border-left: 3px solid rgba(255, 160, 0, 1);
+      }
+
+      .vscode-high-contrast.showEditorSelection
+        .code-line
+        .code-line:hover:before {
+        border-left: none;
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      a:focus,
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: 1px solid -webkit-focus-ring-color;
+        outline-offset: -1px;
+      }
+
+      hr {
+        border: 0;
+        height: 2px;
+        border-bottom: 2px solid;
+      }
+
+      h1 {
+        padding-bottom: 0.3em;
+        line-height: 1.2;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      table > thead > tr > th {
+        text-align: left;
+        border-bottom: 1px solid;
+        padding: 8px 16px;
+      }
+
+      table > thead > tr > th,
+      table > thead > tr > td,
+      table > tbody > tr > th,
+      table > tbody > tr > td {
+        padding: 8px 16px;
+      }
+
+      table > tbody > tr + tr > td {
+        border-top: 1px solid;
+      }
+
+      blockquote {
+        margin: 0 7px 0 5px;
+        padding: 0 16px 0 10px;
+        border-left-width: 5px;
+        border-left-style: solid;
+      }
+
+      code {
+        font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New",
+          monospace, "Droid Sans Fallback";
+        font-size: 1em;
+        line-height: 1.357em;
+      }
+
+      body.wordWrap pre {
+        white-space: pre-wrap;
+      }
+
+      pre:not(.hljs),
+      pre.hljs code > div {
+        padding: 16px;
+        border-radius: 3px;
+        overflow: auto;
+      }
+
+      pre code {
+        color: var(--vscode-editor-foreground);
+        tab-size: 4;
+      }
+
+      /** Theming */
+
+      .vscode-light pre {
+        background-color: rgba(220, 220, 220, 0.4);
+      }
+
+      .vscode-dark pre {
+        background-color: rgba(10, 10, 10, 0.4);
+      }
+
+      .vscode-high-contrast pre {
+        background-color: rgb(0, 0, 0);
+      }
+
+      .vscode-high-contrast h1 {
+        border-color: rgb(0, 0, 0);
+      }
+
+      .vscode-light table > thead > tr > th {
+        border-color: rgba(0, 0, 0, 0.69);
+      }
+
+      .vscode-dark table > thead > tr > th {
+        border-color: rgba(255, 255, 255, 0.69);
+      }
+
+      .vscode-light h1,
+      .vscode-light hr,
+      .vscode-light table > tbody > tr + tr > td {
+        border-color: rgba(0, 0, 0, 0.18);
+      }
+
+      .vscode-dark h1,
+      .vscode-dark hr,
+      .vscode-dark table > tbody > tr + tr > td {
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+    </style>
+
+    <style>
+      /* Tomorrow Theme */
+      /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+      /* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+      /* Tomorrow Comment */
+      .hljs-comment,
+      .hljs-quote {
+        color: #8e908c;
+      }
+
+      /* Tomorrow Red */
+      .hljs-variable,
+      .hljs-template-variable,
+      .hljs-tag,
+      .hljs-name,
+      .hljs-selector-id,
+      .hljs-selector-class,
+      .hljs-regexp,
+      .hljs-deletion {
+        color: #c82829;
+      }
+
+      /* Tomorrow Orange */
+      .hljs-number,
+      .hljs-built_in,
+      .hljs-builtin-name,
+      .hljs-literal,
+      .hljs-type,
+      .hljs-params,
+      .hljs-meta,
+      .hljs-link {
+        color: #f5871f;
+      }
+
+      /* Tomorrow Yellow */
+      .hljs-attribute {
+        color: #eab700;
+      }
+
+      /* Tomorrow Green */
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-bullet,
+      .hljs-addition {
+        color: #718c00;
+      }
+
+      /* Tomorrow Blue */
+      .hljs-title,
+      .hljs-section {
+        color: #4271ae;
+      }
+
+      /* Tomorrow Purple */
+      .hljs-keyword,
+      .hljs-selector-tag {
+        color: #8959a8;
+      }
+
+      .hljs {
+        display: block;
+        overflow-x: auto;
+        color: #4d4d4c;
+        padding: 0.5em;
+      }
+
+      .hljs-emphasis {
+        font-style: italic;
+      }
+
+      .hljs-strong {
+        font-weight: bold;
+      }
+    </style>
+
+    <style>
+      /*
+ * Markdown PDF CSS
+ */
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI",
+          "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+        padding: 0 12px;
+      }
+
+      pre {
+        background-color: #f8f8f8;
+        border: 1px solid #cccccc;
+        border-radius: 3px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+      }
+
+      pre:not(.hljs) {
+        padding: 23px;
+        line-height: 19px;
+      }
+
+      blockquote {
+        background: rgba(127, 127, 127, 0.1);
+        border-color: rgba(0, 122, 204, 0.5);
+      }
+
+      .emoji {
+        height: 1.4em;
+      }
+
+      code {
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      /* for inline code */
+      :not(pre):not(.hljs) > code {
+        color: #c9ae75; /* Change the old color so it seems less like an error */
+        font-size: inherit;
+      }
+
+      /* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+      .page {
+        page-break-after: always;
+      }
+    </style>
+
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <script>
+        mermaid.initialize({
+          startOnLoad: true,
+          theme:
+            document.body.classList.contains("vscode-dark") ||
+            document.body.classList.contains("vscode-high-contrast")
+              ? "dark"
+              : "default",
+        });
+      </script>
+      <h1
+        id="typescript--react-4%EC%A3%BC-%ED%8A%B9%EA%B0%95-%EC%BB%A4%EB%A6%AC%ED%81%98%EB%9F%BC"
+      >
+        TypeScript &amp; React 4주 특강 커리큘럼
+      </h1>
+      <h2 id="%F0%9F%93%8B-%EA%B3%BC%EC%A0%95-%EA%B0%9C%EC%9A%94">
+        📋 과정 개요
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>교육 기간</td>
+            <td>4주 (주 1회, 3시간)</td>
+          </tr>
+          <tr>
+            <td>대상</td>
+            <td>TypeScript와 React 입문자</td>
+          </tr>
+          <tr>
+            <td>선수 지식</td>
+            <td>JavaScript 기초 문법, HTML/CSS 기초</td>
+          </tr>
+          <tr>
+            <td>개발 환경</td>
+            <td>Node.js, VS Code, Git</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 id="%F0%9F%8E%AF-%ED%95%99%EC%8A%B5-%EB%AA%A9%ED%91%9C">
+        🎯 학습 목표
+      </h2>
+      <ul>
+        <li>TypeScript의 기본 문법과 타입 시스템 이해</li>
+        <li>React 컴포넌트 기반 개발 방법론 습득</li>
+        <li>TypeScript와 React를 결합한 실전 개발 능력 향상</li>
+      </ul>
+      <h2
+        id="%F0%9F%93%9A-%EC%A3%BC%EC%B0%A8%EB%B3%84-%EC%BB%A4%EB%A6%AC%ED%81%98%EB%9F%BC"
+      >
+        📚 주차별 커리큘럼
+      </h2>
+      <h3 id="1%EC%A3%BC%EC%B0%A8-typescript-%EA%B8%B0%EC%B4%88-12">
+        1주차: TypeScript 기초 (1/2)
+      </h3>
+      <h4 id="1%EA%B5%90%EC%8B%9C-typescript-%EC%86%8C%EA%B0%9C">
+        1교시: TypeScript 소개
+      </h4>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// TypeScript 기본 설정</span>
+{
+<span class="hljs-string">"compilerOptions"</span>: {
+  <span class="hljs-string">"target"</span>: <span class="hljs-string">"es5"</span>,
+  <span class="hljs-string">"module"</span>: <span class="hljs-string">"commonjs"</span>,
+  <span class="hljs-string">"strict"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"esModuleInterop"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"skipLibCheck"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-string">"forceConsistentCasingInFileNames"</span>: <span class="hljs-literal">true</span>
+}
+}
+</div></code></pre>
+      <h4 id="2%EA%B5%90%EC%8B%9C-%EA%B8%B0%EB%B3%B8-%ED%83%80%EC%9E%85">
+        2교시: 기본 타입
+      </h4>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// 기본 타입 예제</span>
+<span class="hljs-keyword">let</span> name: <span class="hljs-built_in">string</span> = <span class="hljs-string">"John"</span>;
+<span class="hljs-keyword">let</span> age: <span class="hljs-built_in">number</span> = <span class="hljs-number">30</span>;
+<span class="hljs-keyword">let</span> isStudent: <span class="hljs-built_in">boolean</span> = <span class="hljs-literal">true</span>;
+
+<span class="hljs-comment">// 배열</span>
+<span class="hljs-keyword">let</span> numbers: <span class="hljs-built_in">number</span>[] = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+<span class="hljs-keyword">let</span> strings: <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">string</span>&gt; = [<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>];
+
+<span class="hljs-comment">// 튜플</span>
+<span class="hljs-keyword">let</span> tuple: [<span class="hljs-built_in">string</span>, <span class="hljs-built_in">number</span>] = [<span class="hljs-string">"hello"</span>, <span class="hljs-number">10</span>];
+
+<span class="hljs-comment">// enum</span>
+<span class="hljs-keyword">enum</span> Color {
+  Red,
+  Green,
+  Blue,
+}
+<span class="hljs-keyword">let</span> color: Color = Color.Red;
+</div></code></pre>
+      <h4 id="3%EA%B5%90%EC%8B%9C-%EC%8B%A4%EC%8A%B5">3교시: 실습</h4>
+      <ul>
+        <li>TypeScript Playground 활용</li>
+        <li>기본 타입을 활용한 간단한 프로그램 작성</li>
+      </ul>
+      <h3 id="2%EC%A3%BC%EC%B0%A8-typescript-%EA%B8%B0%EC%B4%88-22">
+        2주차: TypeScript 기초 (2/2)
+      </h3>
+      <h4
+        id="1%EA%B5%90%EC%8B%9C-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%99%80-%ED%83%80%EC%9E%85"
+      >
+        1교시: 인터페이스와 타입
+      </h4>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// 인터페이스 정의</span>
+<span class="hljs-keyword">interface</span> User {
+  id: <span class="hljs-built_in">number</span>;
+  name: <span class="hljs-built_in">string</span>;
+  email?: <span class="hljs-built_in">string</span>;
+  readonly birthDate: <span class="hljs-built_in">Date</span>;
+}
+
+<span class="hljs-comment">// 타입 별칭</span>
+<span class="hljs-keyword">type</span> Point = {
+  x: <span class="hljs-built_in">number</span>;
+  y: <span class="hljs-built_in">number</span>;
+};
+
+<span class="hljs-comment">// 인터페이스 확장</span>
+<span class="hljs-keyword">interface</span> Employee <span class="hljs-keyword">extends</span> User {
+  department: <span class="hljs-built_in">string</span>;
+  salary: <span class="hljs-built_in">number</span>;
+}
+</div></code></pre>
+      <h4
+        id="2%EA%B5%90%EC%8B%9C-%ED%95%A8%EC%88%98%EC%99%80-%EC%A0%9C%EB%84%A4%EB%A6%AD"
+      >
+        2교시: 함수와 제네릭
+      </h4>
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// 함수 타입</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add</span>(<span class="hljs-params">x: <span class="hljs-built_in">number</span>, y: <span class="hljs-built_in">number</span></span>): <span class="hljs-title">number</span> </span>{
+  <span class="hljs-keyword">return</span> x + y;
+}
+
+<span class="hljs-comment">// 제네릭 함수</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFirstElement</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">arr: T[]</span>): <span class="hljs-title">T</span> | <span class="hljs-title">undefined</span> </span>{
+  <span class="hljs-keyword">return</span> arr[<span class="hljs-number">0</span>];
+}
+
+<span class="hljs-comment">// 제네릭 인터페이스</span>
+<span class="hljs-keyword">interface</span> Response&lt;T&gt; {
+  data: T;
+  status: <span class="hljs-built_in">number</span>;
+  message: <span class="hljs-built_in">string</span>;
+}
+</div></code></pre>
+      <h3
+        id="3%EC%A3%BC%EC%B0%A8-react%EC%99%80-typescript-%EA%B8%B0%EC%B4%88--todo-list-12"
+      >
+        3주차: React와 TypeScript 기초 &amp; Todo List (1/2)
+      </h3>
+      <h3 id="1%EA%B5%90%EC%8B%9C-react--typescript-%EA%B8%B0%EC%B4%88">
+        1교시: React + TypeScript 기초
+      </h3>
+      <h4 id="%EC%9D%B4%EB%A1%A0-30%EB%B6%84">이론 (30분)</h4>
+      <ul>
+        <li>Create React App with TypeScript 설정</li>
+        <li>TSX 문법과 타입 지정</li>
+        <li>React 컴포넌트 타입 정의</li>
+      </ul>
+      <pre class="hljs"><code><div>// 컴포넌트 props 타입 정의
+interface TodoItemProps {
+  id: number;
+  text: string;
+  completed: boolean;
+  onToggle: (id: number) =&gt; void;
+  onDelete: (id: number) =&gt; void;
+}
+
+// 함수형 컴포넌트 정의
+const TodoItem: React.FC&lt;TodoItemProps&gt; = ({
+  id,
+  text,
+  completed,
+  onToggle,
+  onDelete,
+}) =&gt; {
+  return (
+    &lt;div className={`todo-item ${completed ? &quot;completed&quot; : &quot;&quot;}`}&gt;
+      &lt;input
+        type=&quot;checkbox&quot;
+        checked={completed}
+        onChange={() =&gt; onToggle(id)}
+      /&gt;
+      &lt;span&gt;{text}&lt;/span&gt;
+      &lt;button onClick={() =&gt; onDelete(id)}&gt;삭제&lt;/button&gt;
+    &lt;/div&gt;
+  );
+};
+</div></code></pre>
+      <h4 id="%EC%8B%A4%EC%8A%B5-30%EB%B6%84">실습 (30분)</h4>
+      <ul>
+        <li>CRA로 프로젝트 생성</li>
+        <li>기본 컴포넌트 구조 설계</li>
+        <li>Props 타입 정의 실습</li>
+      </ul>
+      <h3 id="2%EA%B5%90%EC%8B%9C-react-hooks-with-typescript">
+        2교시: React Hooks with TypeScript
+      </h3>
+      <h4 id="%EC%9D%B4%EB%A1%A0-30%EB%B6%84">이론 (30분)</h4>
+      <ul>
+        <li>useState와 타입 추론</li>
+        <li>useEffect 활용</li>
+        <li>커스텀 훅 만들기</li>
+      </ul>
+      <pre class="hljs"><code><div>// Todo 타입 정의
+interface Todo {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+// 커스텀 훅 예제
+function useTodos(initialTodos: Todo[] = []) {
+  const [todos, setTodos] = useState&lt;Todo[]&gt;(initialTodos);
+
+  const addTodo = useCallback((text: string) =&gt; {
+    setTodos((prev) =&gt; [...prev, { id: Date.now(), text, completed: false }]);
+  }, []);
+
+  const toggleTodo = useCallback((id: number) =&gt; {
+    setTodos((prev) =&gt;
+      prev.map((todo) =&gt;
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  }, []);
+
+  return { todos, addTodo, toggleTodo };
+}
+</div></code></pre>
+      <h4 id="%EC%8B%A4%EC%8A%B5-30%EB%B6%84">실습 (30분)</h4>
+      <ul>
+        <li>Todo 상태 관리 구현</li>
+        <li>CRUD 기능 구현</li>
+        <li>커스텀 훅 작성</li>
+      </ul>
+      <h3
+        id="3%EA%B5%90%EC%8B%9C-todo-list-%EA%B8%B0%EB%B3%B8-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84"
+      >
+        3교시: Todo List 기본 기능 구현
+      </h3>
+      <h4 id="%EC%8B%A4%EC%8A%B5-60%EB%B6%84">실습 (60분)</h4>
+      <ul>
+        <li>Todo 입력 폼 구현</li>
+        <li>Todo 목록 표시</li>
+        <li>Todo 완료/삭제 기능</li>
+      </ul>
+      <pre class="hljs"><code><div>// TodoList 컴포넌트
+const TodoList: React.FC = () =&gt; {
+  const [newTodo, setNewTodo] = useState&lt;string&gt;(&quot;&quot;);
+  const { todos, addTodo, toggleTodo } = useTodos();
+
+  const handleSubmit = (e: React.FormEvent) =&gt; {
+    e.preventDefault();
+    if (newTodo.trim()) {
+      addTodo(newTodo.trim());
+      setNewTodo(&quot;&quot;);
+    }
+  };
+
+  return (
+    &lt;div className=&quot;todo-list&quot;&gt;
+      &lt;form onSubmit={handleSubmit}&gt;
+        &lt;input
+          type=&quot;text&quot;
+          value={newTodo}
+          onChange={(e) =&gt; setNewTodo(e.target.value)}
+          placeholder=&quot;할 일을 입력하세요&quot;
+        /&gt;
+        &lt;button type=&quot;submit&quot;&gt;추가&lt;/button&gt;
+      &lt;/form&gt;
+      {/* Todo 아이템 렌더링 */}
+    &lt;/div&gt;
+  );
+};
+</div></code></pre>
+      <h2
+        id="4%EC%A3%BC%EC%B0%A8-todo-list-%EC%99%84%EC%84%B1--api-%EC%97%B0%EB%8F%99-22"
+      >
+        4주차: Todo List 완성 &amp; API 연동 (2/2)
+      </h2>
+      <h3
+        id="1%EA%B5%90%EC%8B%9C-api-%EC%97%B0%EB%8F%99%EA%B3%BC-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC"
+      >
+        1교시: API 연동과 비동기 처리
+      </h3>
+      <h4 id="%EC%9D%B4%EB%A1%A0-30%EB%B6%84">이론 (30분)</h4>
+      <ul>
+        <li>Axios와 TypeScript</li>
+        <li>API 응답 타입 정의</li>
+        <li>에러 처리</li>
+      </ul>
+
+      <pre
+        class="hljs"
+      ><code><div><span class="hljs-comment">// API 타입 정의</span>
+<span class="hljs-keyword">interface</span> TodoResponse {
+  id: <span class="hljs-built_in">number</span>;
+  text: <span class="hljs-built_in">string</span>;
+  completed: <span class="hljs-built_in">boolean</span>;
+  createdAt: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-comment">// API 클라이언트 설정</span>
+<span class="hljs-keyword">const</span> api = axios.create({
+  baseURL: <span class="hljs-string">"https://api.example.com/todos"</span>,
+});
+
+<span class="hljs-comment">// API 함수 정의</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetchTodos</span>(<span class="hljs-params"></span>): <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">TodoResponse</span>[]&gt; </span>{
+  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> api.get&lt;TodoResponse[]&gt;(<span class="hljs-string">"/"</span>);
+  <span class="hljs-keyword">return</span> response.data;
+}
+</div></code></pre>
+      <h4 id="%EC%8B%A4%EC%8A%B5-30%EB%B6%84">실습 (30분)</h4>
+      <ul>
+        <li>API 클라이언트 구현</li>
+        <li>데이터 fetching 로직 작성</li>
+      </ul>
+      <h3
+        id="2%EA%B5%90%EC%8B%9C-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC%EC%99%80-%EB%A1%9C%EB%94%A9%EC%97%90%EB%9F%AC-%EC%B2%98%EB%A6%AC"
+      >
+        2교시: 상태 관리와 로딩/에러 처리
+      </h3>
+      <h4 id="%EC%9D%B4%EB%A1%A0-30%EB%B6%84">이론 (30분)</h4>
+      <ul>
+        <li>로딩 상태 관리</li>
+        <li>에러 바운더리</li>
+        <li>React Query 소개와 활용</li>
+      </ul>
+      <pre class="hljs"><code><div>// React Query를 활용한 Todo 관리
+function useTodoQuery() {
+  const queryClient = useQueryClient();
+
+  const todosQuery = useQuery&lt;TodoResponse[], Error&gt;(&quot;todos&quot;, fetchTodos);
+
+  const addTodoMutation = useMutation(
+    (newTodo: { text: string }) =&gt; api.post(&quot;/todos&quot;, newTodo),
+    {
+      onSuccess: () =&gt; {
+        queryClient.invalidateQueries(&quot;todos&quot;);
+      },
+    }
+  );
+
+  return {
+    todos: todosQuery.data,
+    isLoading: todosQuery.isLoading,
+    error: todosQuery.error,
+    addTodo: addTodoMutation.mutate,
+  };
+}
+</div></code></pre>
+      <h4 id="%EC%8B%A4%EC%8A%B5-30%EB%B6%84">실습 (30분)</h4>
+      <ul>
+        <li>로딩 컴포넌트 구현</li>
+        <li>에러 처리 구현</li>
+        <li>React Query 적용</li>
+      </ul>
+      <h3
+        id="3%EA%B5%90%EC%8B%9C-%EB%A7%88%EB%AC%B4%EB%A6%AC-%EB%B0%8F-%EB%B0%B0%ED%8F%AC"
+      >
+        3교시: 마무리 및 배포
+      </h3>
+      <h4 id="%EC%8B%A4%EC%8A%B5-60%EB%B6%84">실습 (60분)</h4>
+      <ul>
+        <li>스타일링 완성</li>
+        <li>성능 최적화</li>
+        <li>배포 준비</li>
+      </ul>
+      <pre class="hljs"><code><div>// 최적화된 Todo 컴포넌트
+const TodoItem = memo&lt;TodoItemProps&gt;(({ id, text, completed, onToggle }) =&gt; {
+  return (
+    &lt;div className=&quot;todo-item&quot;&gt;
+      &lt;input
+        type=&quot;checkbox&quot;
+        checked={completed}
+        onChange={() =&gt; onToggle(id)}
+      /&gt;
+      &lt;span className={completed ? &quot;completed&quot; : &quot;&quot;}&gt;{text}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+});
+
+// 최종 배포 체크리스트
+interface DeploymentChecklist {
+  optimization: boolean; // 성능 최적화
+  errorHandling: boolean; // 에러 처리
+  accessibility: boolean; // 접근성
+  responsive: boolean; // 반응형 디자인
+  testing: boolean; // 테스트 코드
+}
+</div></code></pre>
+      <h2
+        id="%F0%9F%93%9D-%EC%B5%9C%EC%A2%85-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD"
+      >
+        📝 최종 프로젝트 요구사항
+      </h2>
+      <h3 id="%ED%95%84%EC%88%98-%EA%B8%B0%EB%8A%A5">필수 기능</h3>
+      <ol>
+        <li>Todo CRUD 기능</li>
+        <li>API 연동</li>
+        <li>로딩/에러 상태 처리</li>
+        <li>반응형 디자인</li>
+      </ol>
+      <h3 id="%EC%84%A0%ED%83%9D-%EA%B8%B0%EB%8A%A5">선택 기능</h3>
+      <ol>
+        <li>필터링 (전체/완료/미완료)</li>
+        <li>로컬 스토리지 연동</li>
+        <li>드래그 앤 드롭</li>
+        <li>다크 모드</li>
+      </ol>
+      <h3 id="%ED%8F%89%EA%B0%80-%EA%B8%B0%EC%A4%80">평가 기준</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>평가항목</th>
+            <th>배점</th>
+            <th>세부내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>기능 구현</td>
+            <td>40%</td>
+            <td>필수 기능 완성도</td>
+          </tr>
+          <tr>
+            <td>코드 품질</td>
+            <td>30%</td>
+            <td>TypeScript 활용도, 컴포넌트 설계</td>
+          </tr>
+          <tr>
+            <td>UI/UX</td>
+            <td>20%</td>
+            <td>사용자 경험, 반응형 디자인</td>
+          </tr>
+          <tr>
+            <td>최적화</td>
+            <td>10%</td>
+            <td>성능, 재사용성</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 id="%F0%9F%94%8D-%EC%B0%B8%EA%B3%A0-%EC%9E%90%EB%A3%8C">
+        🔍 참고 자료
+      </h2>
+      <ul>
+        <li>
+          <a href="https://tanstack.com/query/latest">React Query 공식 문서</a>
+        </li>
+        <li>
+          <a href="https://axios-http.com/docs/typescript"
+            >Axios 타입스크립트 가이드</a
+          >
+        </li>
+        <li>
+          <a href="https://react-typescript-cheatsheet.netlify.app/"
+            >React TypeScript Cheatsheet</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

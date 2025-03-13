@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 기본 레이아웃 */
+body {
+  font-family: "GmarketSansMedium" !important;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  padding: 0 var(--content-padding);
+  margin: 0 auto;
+  max-width: var(--content-max-width);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  color: #333;
+}
