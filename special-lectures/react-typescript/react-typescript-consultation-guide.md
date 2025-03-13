@@ -180,11 +180,6 @@ A: "실제 동작하는 Todo List 앱을 처음부터 끝까지
 - 프로젝트 피드백
 - 개발 환경 설정 지원
 
-### 강의 개요 보기 전 설치 확장프로그램(크롬브라우저 설치)
-
-- [크롬 브라우저](https://www.google.com/intl/ko_kr/chrome/)
-- [Markdown Reader](https://chromewebstore.google.com/detail/markdown-reader/medapdbncneneejhbgcjceippjlfkmkg?hl=ko&authuser=0)
-
 ### 강의 개요
 
 1. [현대 웹 개발의 필수 스택: Next.js + TypeScript](https://sangwon7242.github.io/programming-curriculum/programming-curriculum/special-lectures/react-typescript/react-typescript-goal.md)
